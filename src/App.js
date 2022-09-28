@@ -1,7 +1,57 @@
 import './styles/reset.css'
 import './styles/index.css'
+import { useState } from 'react'
+import Greengrocers from './components/Greengrocers'
+import Cart from './components/Cart'
+import Footer from './components/Footer'
 
 import initialStoreItems from './store-items'
+//import CartShopping from './components/Cart';
+
+export default function App() {
+  const [fruitAndVeg, setTasks] = useState(initialStoreItems)
+
+  const [cartItems, setCart] = useState([])
+
+  const addToCart = product => {
+    const cartItem = { ...product }
+    cartItem.quantity = 1
+    console.log('it works', product)
+    setCart([...cartItems, cartItem])
+  }
+
+  function decrementQuantity(cartItem) {
+    console.log('the minus btn got to APP.js', cartItem.name, cartItem.quantity)
+    // setCart(cartItem.quantity - 1)
+
+    if(cartItem.quantity > 1) {
+      cartItem.quantity--
+      setCart([...cartItems])
+    } else {
+      cartItem.filter(item => item.length < 1)
+      setCart([...cartItems])
+    }
+    // if cartItem.quantity is > 1 
+    //   cartItem.quantity-- 
+    //   setCart([...cartItems])  // update stae for React
+    // else
+    //   remove cartItem from cart 
+  }
+
+  function incQuantity(cartItem) {
+    cartItem.quantity++
+    setCart([...cartItems])
+  }
+  console.log('rendering app', cartItems)
+  //console.log(fruitAndVeg)
+  return (
+    <>
+      <Greengrocers foodList={fruitAndVeg} onAdd={addToCart} />
+      <Cart cartItems={cartItems} minus={decrementQuantity} inc={incQuantity} />
+      <Footer />
+    </>
+  )
+}
 
 /*
 Here's what a store item should look like
@@ -14,48 +64,4 @@ Here's what a store item should look like
 What should a cart item look like? 🤔
 */
 
-console.log(initialStoreItems)
-
-export default function App() {
-  // Setup state here...
-
-  return (
-    <>
-      <header id="store">
-        <h1>Greengrocers</h1>
-        <ul className="item-list store--item-list">
-          {/* Wrtite some code here... */}
-        </ul>
-      </header>
-      <main id="cart">
-        <h2>Your Cart</h2>
-        <div className="cart--item-list-container">
-          <ul className="item-list cart--item-list">
-            {/* Wrtite some code here... */}
-          </ul>
-        </div>
-        <div className="total-section">
-          <div>
-            <h3>Total</h3>
-          </div>
-          <div>
-            <span className="total-number">£0.00</span>
-          </div>
-        </div>
-      </main>
-      <div>
-        Icons made by
-        <a
-          href="https://www.flaticon.com/authors/icongeek26"
-          title="Icongeek26"
-        >
-          Icongeek26
-        </a>
-        from
-        <a href="https://www.flaticon.com/" title="Flaticon">
-          www.flaticon.com
-        </a>
-      </div>
-    </>
-  )
-}
+//console.log(initialStoreItems)
