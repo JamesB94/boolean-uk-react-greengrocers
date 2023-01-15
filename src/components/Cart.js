@@ -1,5 +1,7 @@
 const CartShopping = props => {
-  const { cartItems, minus, inc } = props
+  const { cartItems, minus, inc, calculateTotal} = props
+
+
   return (
     <main id="cart">
       <h2>Your Cart</h2>
@@ -42,7 +44,7 @@ const CartShopping = props => {
           <h3>Total</h3>
         </div>
         <div>
-          <span className="total-number">£0.00</span>
+          <span className="total-number">{ calculateTotal() }</span>
         </div>
       </div>
     </main>
