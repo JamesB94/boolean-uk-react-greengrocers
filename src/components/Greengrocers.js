@@ -1,5 +1,3 @@
-// import '../styles/reset.css'
-// import '../styles/index.css'
 import AddFoodBtn from "./AddFoodBtn";
 
 const Greengrocers = ({foodList, onAdd}) => {

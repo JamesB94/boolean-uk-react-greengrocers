@@ -10,13 +10,18 @@ import initialStoreItems from './store-items'
 export default function App() {
   const [fruitAndVeg, setTasks] = useState(initialStoreItems)
 
-  const [cartItems, setCart] = useState([])
+ const [cartItems, setCart] = useState([])
 
-  const addToCart = product => {
-    const cartItem = { ...product }
-    cartItem.quantity = 1
-    setCart([...cartItems, cartItem])
+
+ const addToCart = product => {
+  let existingProduct = cartItems.find(item => item.id === product.id);
+  if(existingProduct) {
+    setCart(cartItems.map(item => item.id === product.id ? {...item, quantity: item.quantity+1} : item))
+  } else {
+    setCart([...cartItems, { ...product, quantity: 1 }]);
   }
+}
+
 
   const decreseButton = product => {
     if (product.quantity <= 1) {
